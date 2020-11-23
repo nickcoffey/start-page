@@ -1,0 +1,25 @@
+---
+name: Button
+menu: Components
+---
+
+import { Playground, Props } from 'docz'
+import { Button } from './'
+
+# Button
+
+<Props of={Button} />
+
+## Basic Usage
+
+<Playground>
+  <Button onClick={() => console.log('Hello')}>Click Me</Button>
+</Playground>
+
+## With Icon
+
+<Playground>
+  <Button icon="plus" onClick={() => console.log('Icon clicked')}>
+    Add
+  </Button>
+</Playground>

@@ -1,9 +1,13 @@
 import React, { ButtonHTMLAttributes, useContext } from 'react'
 import styled from 'styled-components'
-import { ThemeContext } from '../../App'
-import { borderRadiusMixin, boxShadowMixin } from './Mixins'
+import { ThemeContext } from '../../../App'
+import { borderRadiusMixin, boxShadowMixin } from '../Mixins'
 
-const Button = ({ children, icon, ...props }: ButtonHTMLAttributes<HTMLButtonElement> & { icon?: string }) => {
+interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
+  icon?: string
+}
+
+const Button = ({ children, icon, ...props }: Props) => {
   const theme = useContext(ThemeContext)
 
   const StyledButton = styled.button`
