@@ -1,23 +1,24 @@
 import React, { ButtonHTMLAttributes, useContext } from 'react'
 import styled from 'styled-components'
 import { ThemeContext } from '../../App'
-import { borderRadiusMixin, boxShadowMixin } from './Mixins'
+import { borderRadiusMixin } from './Mixins'
 
 interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
   icon?: string
+  color?: 'primary' | 'secondary'
 }
 
-const Button = ({ children, icon, ...props }: Props) => {
+const Button = ({ children, icon, color, ...props }: Props) => {
   const theme = useContext(ThemeContext)
+  const text = color ? (color === 'primary' ? 'primaryText' : 'secondaryText') : 'primaryText'
 
   const StyledButton = styled.button`
-    background-color: ${theme.primary};
+    background-color: ${color ? theme[color] : theme.primary};
     border: 0px;
     padding: 8px 16px;
-    color: #ffffff;
+    color: ${theme[text]};
     cursor: pointer;
     ${borderRadiusMixin}
-    ${boxShadowMixin}
   `
 
   return (
