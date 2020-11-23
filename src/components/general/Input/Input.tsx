@@ -1,18 +1,15 @@
 import React, { InputHTMLAttributes } from 'react'
 import styled from 'styled-components'
-import { boxShadowMixin } from './Mixins'
+import { borderRadiusMixin, boxShadowMixin } from '../Mixins'
 
 const Input = ({ children, ...props }: InputHTMLAttributes<HTMLInputElement>) => {
   const StyledInput = styled.input`
-    margin-right: 24px;
-    flex: 4;
-    height: 30px;
-    border-radius: 4px;
     border: 0px;
     padding-left: 12px;
     background-color: #d3d3d3;
     color: black;
     ${boxShadowMixin}
+    ${borderRadiusMixin}
 
     &:hover {
       &::placeholder {
@@ -27,7 +24,14 @@ const Input = ({ children, ...props }: InputHTMLAttributes<HTMLInputElement>) =>
     }
   `
 
-  return <StyledInput {...props}>{children}</StyledInput>
+  return (
+    <div>
+      {/* <i className={`fas fa-${icon}`} style={{ paddingRight: children ? 4 : undefined }}></i> */}
+      <i className={`fas fa-search`} style={{ paddingRight: 4 }}></i>
+      {children}
+      <StyledInput {...props} />
+    </div>
+  )
 }
 
 export default Input
