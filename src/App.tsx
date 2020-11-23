@@ -5,14 +5,14 @@ import { Header, TopBar } from './components'
 const theme = {
   light: {
     background: '#ffffff',
-    primary: '#2a9d8f',
-    secondary: '#e9c46a',
+    primary: '#03a9f4',
+    secondary: '#ff9800',
     text: '#000000'
   },
   dark: {
-    background: '#264653',
-    primary: '#2a9d8f',
-    secondary: '#e9c46a',
+    background: '#000000',
+    primary: '#0288d1',
+    secondary: '#ff9800',
     text: '#ffffff'
   }
 }
