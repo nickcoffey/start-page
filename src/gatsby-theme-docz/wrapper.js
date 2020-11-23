@@ -1,8 +1,9 @@
 import * as React from 'react'
 import { Helmet } from 'react-helmet-async'
+import './index.css'
 
 // The doc prop contains some metadata about the page being rendered that you can use.
-// eslint-disable-next-line react/prop-types
+// eslint-disable-next-line
 const Wrapper = ({ children, doc }) => (
   <React.Fragment>
     <Helmet>
