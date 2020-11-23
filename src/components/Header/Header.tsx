@@ -1,20 +1,22 @@
 import React from 'react'
 import styled from 'styled-components'
-import Clock from './Clock'
-import Search from './Search'
+import { Button } from '../general'
 
 const Container = styled.header`
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
-  border: 1px solid red;
 `
 
-const Header = () => {
+type Props = {
+  isDark: boolean
+  setIsDark: React.Dispatch<React.SetStateAction<boolean>>
+}
+
+const Header = ({ isDark, setIsDark }: Props) => {
   return (
     <Container>
-      <Clock />
-      <Search />
+      <Button onClick={() => setIsDark(!isDark)} icon={isDark ? 'sun' : 'moon'} />
     </Container>
   )
 }
