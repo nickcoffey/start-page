@@ -1,7 +1,7 @@
 import React, { ButtonHTMLAttributes, useContext } from 'react'
 import styled from 'styled-components'
-import { ThemeContext } from '../../../App'
-import { borderRadiusMixin, boxShadowMixin } from '../Mixins'
+import { ThemeContext } from '../../App'
+import { borderRadiusMixin, boxShadowMixin } from './Mixins'
 
 interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
   icon?: string

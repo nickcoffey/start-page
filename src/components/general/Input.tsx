@@ -1,6 +1,6 @@
 import React, { InputHTMLAttributes } from 'react'
 import styled from 'styled-components'
-import { borderRadiusMixin, boxShadowMixin } from '../Mixins'
+import { borderRadiusMixin, boxShadowMixin } from './Mixins'
 
 const Input = ({ children, ...props }: InputHTMLAttributes<HTMLInputElement>) => {
   const StyledInput = styled.input`
