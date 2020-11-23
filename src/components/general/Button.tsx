@@ -14,11 +14,25 @@ const Button = ({ children, icon, color, ...props }: Props) => {
 
   const StyledButton = styled.button`
     background-color: ${color ? theme[color] : theme.primary};
-    border: 0px;
+    border: 1px solid ${color ? theme[color] : theme.primary};
     padding: 8px 16px;
     color: ${theme[text]};
     cursor: pointer;
     ${borderRadiusMixin}
+    position: relative;
+    overflow: hidden;
+    /* transition-property: color background-color;
+    transition-duration: 0.1s;
+    transition-timing-function: ease-in-out; */
+
+    :hover {
+      background-color: ${theme.background};
+      color: ${theme.text};
+    }
+
+    :active {
+      transform: translateY(1px);
+    }
   `
 
   return (
