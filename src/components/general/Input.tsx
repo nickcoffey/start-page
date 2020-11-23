@@ -1,36 +1,68 @@
-import React, { InputHTMLAttributes } from 'react'
-import styled from 'styled-components'
-import { borderRadiusMixin, boxShadowMixin } from './Mixins'
+import React, { InputHTMLAttributes, useContext } from 'react'
+import styled, { css } from 'styled-components'
+import { ThemeContext } from '../../App'
+import { borderRadiusMixin } from './Mixins'
+interface Props extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type'> {
+  icon?: string
+}
 
-const Input = ({ children, ...props }: InputHTMLAttributes<HTMLInputElement>) => {
-  const StyledInput = styled.input`
-    border: 0px;
-    padding-left: 12px;
-    background-color: #d3d3d3;
-    color: black;
-    ${boxShadowMixin}
-    ${borderRadiusMixin}
+const Input = ({ icon, ...props }: Props) => {
+  const theme = useContext(ThemeContext)
 
-    &:hover {
-      &::placeholder {
-        opacity: 1;
-      }
+  const opacityMixin = (opacity: number) => css`
+    i {
+      opacity: ${opacity};
     }
-
-    &:focus {
-      &::placeholder {
-        opacity: 1;
-      }
+    input::placeholder {
+      opacity: ${opacity};
     }
   `
 
+  const InputContainer = styled.div`
+    background-color: ${theme.background};
+    color: ${theme.text};
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding: 8px 16px;
+    border: 1px solid ${theme.text};
+    ${borderRadiusMixin}
+    ${opacityMixin(0.4)}
+
+    i {
+      padding-right: 4px;
+    }
+
+    :not(:placeholder-shown) {
+      i {
+        opacity: 1;
+      }
+    }
+
+    :hover {
+      border: 1px solid ${theme.primary};
+      ${opacityMixin(1)}
+    }
+
+    :focus-within {
+      border: 1px solid ${theme.primary};
+      ${opacityMixin(1)}
+    }
+  `
+
+  const StyledInput = styled.input`
+    border: 0px;
+    padding-left: 12px;
+    background-color: inherit;
+    color: inherit;
+    flex-grow: 1;
+  `
+
   return (
-    <div>
-      {/* <i className={`fas fa-${icon}`} style={{ paddingRight: children ? 4 : undefined }}></i> */}
-      <i className={`fas fa-search`} style={{ paddingRight: 4 }}></i>
-      {children}
+    <InputContainer>
+      {icon && <i className={`fas fa-${icon}`}></i>}
       <StyledInput {...props} />
-    </div>
+    </InputContainer>
   )
 }
 

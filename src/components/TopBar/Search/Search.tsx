@@ -12,7 +12,7 @@ const SearchBar = styled.div`
 const Search = () => {
   return (
     <SearchBar>
-      <Input type="text" placeholder="Find bookmarks or search..." />
+      <Input placeholder="Find bookmarks or search..." />
       <Actions />
     </SearchBar>
   )

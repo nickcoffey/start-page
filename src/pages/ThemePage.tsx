@@ -70,7 +70,7 @@ const ThemePage = () => {
         </ComponentSection>
 
         <ComponentSection label="Input">
-          <Input />
+          <Input icon="search" placeholder="Enter text here..." />
         </ComponentSection>
       </Section>
 

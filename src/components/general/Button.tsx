@@ -21,9 +21,6 @@ const Button = ({ children, icon, color, ...props }: Props) => {
     ${borderRadiusMixin}
     position: relative;
     overflow: hidden;
-    /* transition-property: color background-color;
-    transition-duration: 0.1s;
-    transition-timing-function: ease-in-out; */
 
     :hover {
       background-color: ${theme.background};
