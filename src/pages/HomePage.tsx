@@ -1,10 +1,11 @@
 import React from 'react'
-import { TopBar } from '../components'
+import { Bookmarks, TopBar } from '../components'
 
 const HomePage = () => {
   return (
     <>
       <TopBar />
+      <Bookmarks />
     </>
   )
 }
