@@ -1,7 +1,7 @@
 import React, { ReactNode, useContext } from 'react'
 import styled from 'styled-components'
 import { ThemeContext } from '../App'
-import { Input, Button } from '../components/general'
+import { Input, Button, Card } from '../components/general'
 
 const SectionLabel = styled.h2`
   text-decoration: underline;
@@ -71,6 +71,10 @@ const ThemePage = () => {
 
         <ComponentSection label="Input">
           <Input icon="search" placeholder="Enter text here..." />
+        </ComponentSection>
+
+        <ComponentSection label="Card">
+          <Card>Basic Card</Card>
         </ComponentSection>
       </Section>
 
