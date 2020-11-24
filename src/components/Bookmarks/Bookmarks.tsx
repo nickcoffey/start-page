@@ -35,17 +35,17 @@ const Subtitle = styled.h3<{ color: string }>`
   color: ${({ color }) => color};
 `
 
-type BookmarkCardProps = {
+export type BookmarkType = {
   icon: string
   subtitle: string
   link: string
 }
 
-const BookmarkCard = ({ icon, subtitle, link }: BookmarkCardProps) => {
+const BookmarkCard = ({ icon, subtitle, link }: BookmarkType) => {
   const theme = useContext(ThemeContext)
 
   return (
-    <CardLink target="_blank" href={link}>
+    <CardLink href={link}>
       <StyledCard hoverColor={theme.primary}>
         <Icon color={theme.text} className={`fab fa-${icon}`} />
         <Subtitle color={theme.text}>{subtitle}</Subtitle>
@@ -61,26 +61,45 @@ const CardContainer = styled.div`
   gap: 24px;
 `
 
-const Bookmarks = () => {
-  const linkTemplate = (link: string, suffix = 'com', prefix = 'www') => `https://${prefix}.${link}.${suffix}`
+type Props = {
+  loading: boolean
+  error?: string
+  bookmarks?: BookmarkType[]
+}
 
-  const bookmarks: BookmarkCardProps[] = [
-    { icon: 'reddit', subtitle: 'Reddit', link: linkTemplate('reddit') },
-    { icon: 'github', subtitle: 'GitHub', link: linkTemplate('github') },
-    { icon: 'youtube', subtitle: 'YouTube', link: linkTemplate('youtube') },
-    { icon: 'dev', subtitle: 'Dev.to', link: linkTemplate('dev', 'to') },
-    { icon: 'amazon', subtitle: 'Amazon', link: linkTemplate('amazon') },
-    { icon: 'apple', subtitle: 'Apple', link: linkTemplate('apple') },
-    { icon: 'searchengin', subtitle: 'DuckDuckGo', link: linkTemplate('duckduckgo') },
-    { icon: 'google-drive', subtitle: 'Drive', link: linkTemplate('google', undefined, 'drive') }
-  ]
+const Bookmarks = ({ loading, error, bookmarks }: Props) => {
+  // const linkTemplate = (link: string, suffix = 'com', prefix = 'www') => `https://${prefix}.${link}.${suffix}`
+
+  // const bookmarks: BookmarkType[] = [
+  //   { icon: 'reddit', subtitle: 'Reddit', link: linkTemplate('reddit') },
+  //   { icon: 'github', subtitle: 'GitHub', link: linkTemplate('github') },
+  //   { icon: 'youtube', subtitle: 'YouTube', link: linkTemplate('youtube') },
+  //   { icon: 'dev', subtitle: 'Dev.to', link: linkTemplate('dev', 'to') },
+  //   { icon: 'amazon', subtitle: 'Amazon', link: linkTemplate('amazon') },
+  //   { icon: 'apple', subtitle: 'Apple', link: linkTemplate('apple') },
+  //   { icon: 'searchengin', subtitle: 'DuckDuckGo', link: linkTemplate('duckduckgo') },
+  //   { icon: 'google-drive', subtitle: 'Drive', link: linkTemplate('google', undefined, 'drive') }
+  // ]
+
+  const sortedBookmarks = bookmarks?.sort((a, b) => (a.subtitle.toLowerCase() > b.subtitle.toLowerCase() ? 1 : -1))
 
   return (
-    <CardContainer>
-      {bookmarks.map((bookmark, index) => (
-        <BookmarkCard key={index} {...bookmark} />
-      ))}
-    </CardContainer>
+    <>
+      {error ? (
+        <>
+          <h1>Error</h1>
+          <p>{error}</p>
+        </>
+      ) : loading ? (
+        <h1>Loading...</h1>
+      ) : (
+        <CardContainer>
+          {sortedBookmarks?.map((bookmark, index) => (
+            <BookmarkCard key={index} {...bookmark} />
+          ))}
+        </CardContainer>
+      )}
+    </>
   )
 }
 
