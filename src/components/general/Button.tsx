@@ -3,6 +3,27 @@ import styled from 'styled-components'
 import { ThemeContext } from '../../App'
 import { borderRadiusMixin } from './Mixins'
 
+const StyledButton = styled.button<{ background: string; hoverBackground: string; text: string; hoverText: string }>`
+  background-color: ${({ background }) => background};
+  border: 1px solid ${({ background }) => background};
+  padding: 8px 16px;
+  color: ${({ text }) => text};
+  cursor: pointer;
+  ${borderRadiusMixin}
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  :hover {
+    background-color: ${({ hoverBackground }) => hoverBackground};
+    color: ${({ hoverText }) => hoverText};
+  }
+
+  :active {
+    transform: translateY(1px);
+  }
+`
+
 interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
   icon?: string
   color?: 'primary' | 'secondary'
@@ -12,28 +33,14 @@ const Button = ({ children, icon, color, ...props }: Props) => {
   const theme = useContext(ThemeContext)
   const text = color ? (color === 'primary' ? 'primaryText' : 'secondaryText') : 'primaryText'
 
-  const StyledButton = styled.button`
-    background-color: ${color ? theme[color] : theme.primary};
-    border: 1px solid ${color ? theme[color] : theme.primary};
-    padding: 8px 16px;
-    color: ${theme[text]};
-    cursor: pointer;
-    ${borderRadiusMixin}
-    position: relative;
-    overflow: hidden;
-
-    :hover {
-      background-color: ${theme.background};
-      color: ${theme.text};
-    }
-
-    :active {
-      transform: translateY(1px);
-    }
-  `
-
   return (
-    <StyledButton {...props}>
+    <StyledButton
+      background={color ? theme[color] : theme.primary}
+      hoverBackground={theme.background}
+      text={theme[text]}
+      hoverText={theme.text}
+      {...props}
+    >
       {icon && <i className={`fas fa-${icon}`} style={{ paddingRight: children ? 4 : undefined }}></i>}
       {children}
     </StyledButton>
