@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { Button, Input } from '../general'
 
-const SearchBar = styled.div`
+const SearchBar = styled.form`
   display: flex;
   flex: 1;
   margin-left: 24px;
@@ -10,10 +10,10 @@ const SearchBar = styled.div`
 
 const Search = () => {
   return (
-    <SearchBar>
-      <Input icon="search" placeholder="Find bookmarks or search..." />
-      <Button icon="plus" style={{ margin: '0px 24px' }}>
-        Add
+    <SearchBar method="get" id="search" action="https://duckduckgo.com/">
+      <Input icon="search" placeholder="Search DuckDuckGo..." name="q" autoFocus />
+      <Button icon="search" type="submit" style={{ marginRight: 24, marginLeft: 12 }}>
+        Search
       </Button>
       <Button icon="edit">Edit</Button>
     </SearchBar>
