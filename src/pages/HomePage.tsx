@@ -5,7 +5,7 @@ import { firestore } from '../services'
 
 const HomePage = () => {
   const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string>()
+  const [error, setError] = useState(false)
   const [bookmarks, setBookmarks] = useState<BookmarkType[]>()
 
   firestore
@@ -19,7 +19,10 @@ const HomePage = () => {
       setBookmarks(tempBookmarks)
       setLoading(false)
     })
-    .catch((error: string) => setError(error))
+    .catch((error: string) => {
+      console.error(error)
+      setError(true)
+    })
 
   return (
     <>

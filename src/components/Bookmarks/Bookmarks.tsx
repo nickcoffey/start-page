@@ -1,38 +1,26 @@
 import React, { useContext } from 'react'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import { ThemeContext } from '../../App'
-import { Card } from '../general'
+import { borderRadiusMixin, Button, Card, Spinner } from '../general'
 
 const CardLink = styled.a`
   text-decoration: none;
 `
 
-const StyledCard = styled(Card)<{ hoverColor: string }>`
+const centeredMixin = css`
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  :hover {
-    h3 {
-      color: ${({ hoverColor }) => hoverColor};
-    }
-    i {
-      color: ${({ hoverColor }) => hoverColor};
-    }
-  }
-  :active {
-    transform: translateY(1px);
-  }
 `
 
-const Icon = styled.i<{ color: string }>`
+const StyledCard = styled(Card)`
+  ${centeredMixin}
+`
+
+const Icon = styled.i`
   font-size: 60px;
-  color: ${({ color }) => color};
   margin: 24px 0px;
-`
-
-const Subtitle = styled.h3<{ color: string }>`
-  color: ${({ color }) => color};
 `
 
 export type BookmarkType = {
@@ -41,18 +29,31 @@ export type BookmarkType = {
   link: string
 }
 
-const BookmarkCard = ({ icon, subtitle, link }: BookmarkType) => {
-  const theme = useContext(ThemeContext)
+const BookmarkCard = ({ icon, subtitle, link }: BookmarkType) => (
+  <CardLink href={link}>
+    <StyledCard hoverColor="primary">
+      <Icon className={`fab fa-${icon}`} />
+      <h3>{subtitle}</h3>
+    </StyledCard>
+  </CardLink>
+)
 
-  return (
-    <CardLink href={link}>
-      <StyledCard hoverColor={theme.primary}>
-        <Icon color={theme.text} className={`fab fa-${icon}`} />
-        <Subtitle color={theme.text}>{subtitle}</Subtitle>
-      </StyledCard>
-    </CardLink>
-  )
-}
+const LoadingContainer = styled.div`
+  ${centeredMixin}
+`
+
+const ErrorContainer = styled.div<{ border: string }>`
+  ${centeredMixin};
+  ${borderRadiusMixin};
+  border: 1px solid ${({ border }) => border};
+  padding: 24px 0px;
+  button {
+    margin: 0px;
+  }
+  h3 {
+    margin-bottom: 0px 0px 24px;
+  }
+`
 
 const CardContainer = styled.div`
   display: grid;
@@ -63,35 +64,25 @@ const CardContainer = styled.div`
 
 type Props = {
   loading: boolean
-  error?: string
+  error: boolean
   bookmarks?: BookmarkType[]
 }
 
 const Bookmarks = ({ loading, error, bookmarks }: Props) => {
-  // const linkTemplate = (link: string, suffix = 'com', prefix = 'www') => `https://${prefix}.${link}.${suffix}`
-
-  // const bookmarks: BookmarkType[] = [
-  //   { icon: 'reddit', subtitle: 'Reddit', link: linkTemplate('reddit') },
-  //   { icon: 'github', subtitle: 'GitHub', link: linkTemplate('github') },
-  //   { icon: 'youtube', subtitle: 'YouTube', link: linkTemplate('youtube') },
-  //   { icon: 'dev', subtitle: 'Dev.to', link: linkTemplate('dev', 'to') },
-  //   { icon: 'amazon', subtitle: 'Amazon', link: linkTemplate('amazon') },
-  //   { icon: 'apple', subtitle: 'Apple', link: linkTemplate('apple') },
-  //   { icon: 'searchengin', subtitle: 'DuckDuckGo', link: linkTemplate('duckduckgo') },
-  //   { icon: 'google-drive', subtitle: 'Drive', link: linkTemplate('google', undefined, 'drive') }
-  // ]
-
+  const theme = useContext(ThemeContext)
   const sortedBookmarks = bookmarks?.sort((a, b) => (a.subtitle.toLowerCase() > b.subtitle.toLowerCase() ? 1 : -1))
 
   return (
     <>
       {error ? (
-        <>
-          <h1>Error</h1>
-          <p>{error}</p>
-        </>
+        <ErrorContainer border={theme.secondary}>
+          <h3>There was an error loading your bookmarks please try again</h3>
+          <Button icon="redo">Try Again</Button>
+        </ErrorContainer>
       ) : loading ? (
-        <h1>Loading...</h1>
+        <LoadingContainer>
+          <Spinner />
+        </LoadingContainer>
       ) : (
         <CardContainer>
           {sortedBookmarks?.map((bookmark, index) => (
