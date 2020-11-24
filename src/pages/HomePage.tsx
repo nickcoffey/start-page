@@ -1,33 +1,15 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Bookmarks, TopBar } from '../components'
 import { BookmarkType } from '../components/Bookmarks'
-import { firestore } from '../services'
+import { useQuery } from '../hooks'
 
 const HomePage = () => {
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState(false)
-  const [bookmarks, setBookmarks] = useState<BookmarkType[]>()
-
-  firestore
-    .collection('bookmarks')
-    .get()
-    .then((snapshot) => {
-      const tempBookmarks: BookmarkType[] = []
-      snapshot.forEach((doc) =>
-        tempBookmarks.push({ icon: doc.data().icon, subtitle: doc.data().subtitle, link: doc.data().link })
-      )
-      setBookmarks(tempBookmarks)
-      setLoading(false)
-    })
-    .catch((error: string) => {
-      console.error(error)
-      setError(true)
-    })
+  const { data, loading, error } = useQuery<BookmarkType>('bookmarks', 'read')
 
   return (
     <>
       <TopBar />
-      <Bookmarks loading={loading} error={error} bookmarks={bookmarks} />
+      <Bookmarks loading={loading} error={error} bookmarks={data} />
     </>
   )
 }
