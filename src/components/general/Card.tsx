@@ -24,7 +24,7 @@ const Card = ({ children, width = 150, height = 150, ...props }: Props) => {
   const theme = useContext(ThemeContext)
 
   return (
-    <StyledCard border={theme.primary} hoverBorder={theme.text} width={width} height={height} {...props}>
+    <StyledCard border={theme.text} hoverBorder={theme.primary} width={width} height={height} {...props}>
       {children}
     </StyledCard>
   )

@@ -13,7 +13,10 @@ const StyledCard = styled(Card)<{ hoverColor: string }>`
   align-items: center;
   justify-content: center;
   :hover {
-    h1 {
+    h3 {
+      color: ${({ hoverColor }) => hoverColor};
+    }
+    i {
       color: ${({ hoverColor }) => hoverColor};
     }
   }
@@ -22,29 +25,29 @@ const StyledCard = styled(Card)<{ hoverColor: string }>`
   }
 `
 
-const BigLetters = styled.h1<{ color: string }>`
-  font-size: 300%;
-  font-weight: 900;
+const Icon = styled.i<{ color: string }>`
+  font-size: 60px;
   color: ${({ color }) => color};
+  margin: 24px 0px;
 `
 
-const Subtitle = styled.p<{ color: string }>`
+const Subtitle = styled.h3<{ color: string }>`
   color: ${({ color }) => color};
 `
 
 type BookmarkCardProps = {
-  letters: string
+  icon: string
   subtitle: string
   link: string
 }
 
-const BookmarkCard = ({ letters, subtitle, link }: BookmarkCardProps) => {
+const BookmarkCard = ({ icon, subtitle, link }: BookmarkCardProps) => {
   const theme = useContext(ThemeContext)
 
   return (
     <CardLink target="_blank" href={link}>
-      <StyledCard hoverColor={theme.text}>
-        <BigLetters color={theme.secondary}>{letters}</BigLetters>
+      <StyledCard hoverColor={theme.primary}>
+        <Icon color={theme.text} className={`fab fa-${icon}`} />
         <Subtitle color={theme.text}>{subtitle}</Subtitle>
       </StyledCard>
     </CardLink>
@@ -62,14 +65,14 @@ const Bookmarks = () => {
   const linkTemplate = (link: string, suffix = 'com', prefix = 'www') => `https://${prefix}.${link}.${suffix}`
 
   const bookmarks: BookmarkCardProps[] = [
-    { letters: 'R', subtitle: 'Reddit', link: linkTemplate('reddit') },
-    { letters: 'GH', subtitle: 'GitHub', link: linkTemplate('github') },
-    { letters: 'YT', subtitle: 'YouTube', link: linkTemplate('youtube') },
-    { letters: 'DEV', subtitle: 'Dev.to', link: linkTemplate('dev', 'to') },
-    { letters: 'AZ', subtitle: 'Amazon', link: linkTemplate('amazon') },
-    { letters: 'APPL', subtitle: 'Apple', link: linkTemplate('apple') },
-    { letters: 'DDG', subtitle: 'DuckDuckGo', link: linkTemplate('duckduckgo') },
-    { letters: 'D', subtitle: 'Drive', link: linkTemplate('google', undefined, 'drive') }
+    { icon: 'reddit', subtitle: 'Reddit', link: linkTemplate('reddit') },
+    { icon: 'github', subtitle: 'GitHub', link: linkTemplate('github') },
+    { icon: 'youtube', subtitle: 'YouTube', link: linkTemplate('youtube') },
+    { icon: 'dev', subtitle: 'Dev.to', link: linkTemplate('dev', 'to') },
+    { icon: 'amazon', subtitle: 'Amazon', link: linkTemplate('amazon') },
+    { icon: 'apple', subtitle: 'Apple', link: linkTemplate('apple') },
+    { icon: 'searchengin', subtitle: 'DuckDuckGo', link: linkTemplate('duckduckgo') },
+    { icon: 'google-drive', subtitle: 'Drive', link: linkTemplate('google', undefined, 'drive') }
   ]
 
   return (
