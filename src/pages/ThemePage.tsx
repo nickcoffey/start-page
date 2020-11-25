@@ -1,7 +1,7 @@
-import React, { ReactNode, useContext } from 'react'
+import React, { ReactNode, useContext, useState } from 'react'
 import styled from 'styled-components'
 import { ThemeContext } from '../App'
-import { Input, Button, Card, Spinner } from '../components/general'
+import { Input, Button, Card, Spinner, Modal } from '../components/general'
 
 const SectionLabel = styled.h2`
   text-decoration: underline;
@@ -24,6 +24,14 @@ const SectionContainer = styled.div`
   }
 `
 
+const ModalContent = styled.div`
+  height: 200px;
+  width: 400px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`
+
 const ColorBox = styled.div<{ backgroundColor: string; color: string }>`
   display: flex;
   align-items: center;
@@ -36,6 +44,7 @@ const ColorBox = styled.div<{ backgroundColor: string; color: string }>`
 
 const ThemePage = () => {
   const theme = useContext(ThemeContext)
+  const [showModal, setShowModal] = useState(false)
 
   type SectionProps = {
     children: ReactNode
@@ -79,6 +88,15 @@ const ThemePage = () => {
 
         <ComponentSection label="Spinner">
           <Spinner />
+        </ComponentSection>
+
+        <ComponentSection label="Modal">
+          <Button onClick={() => setShowModal(true)}>Show Modal</Button>
+          {showModal && (
+            <Modal close={() => setShowModal(false)}>
+              <ModalContent>Click outside to close</ModalContent>
+            </Modal>
+          )}
         </ComponentSection>
       </Section>
 
