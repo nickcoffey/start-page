@@ -8,6 +8,8 @@ type Input = {
   [key: string]: unknown
 }
 
+// TODO: remove
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const useQuery = <T,>(collection: string, operation: Operation, input?: Input) => {
   const [data, setData] = useState<T[]>()
   const [error, setError] = useState(false)
