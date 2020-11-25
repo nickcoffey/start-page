@@ -65,10 +65,11 @@ const CardContainer = styled.div`
 type Props = {
   loading: boolean
   error: boolean
+  refetch: () => void
   bookmarks?: BookmarkType[]
 }
 
-const Bookmarks = ({ loading, error, bookmarks }: Props) => {
+const Bookmarks = ({ loading, error, refetch, bookmarks }: Props) => {
   const theme = useContext(ThemeContext)
   const sortedBookmarks = bookmarks?.sort((a, b) => (a.subtitle.toLowerCase() > b.subtitle.toLowerCase() ? 1 : -1))
 
@@ -77,7 +78,9 @@ const Bookmarks = ({ loading, error, bookmarks }: Props) => {
       {error ? (
         <ErrorContainer border={theme.secondary}>
           <h3>There was an error loading your bookmarks please try again</h3>
-          <Button icon="redo">Try Again</Button>
+          <Button icon="redo" onClick={() => refetch()}>
+            Try Again
+          </Button>
         </ErrorContainer>
       ) : loading ? (
         <LoadingContainer>

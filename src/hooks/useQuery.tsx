@@ -20,7 +20,7 @@ const useQuery = <T,>(collection: string, operation: Operation, input?: Input) =
 
   const dbCollection = firestore.collection(collection)
 
-  useEffect(() => {
+  const runQuery = () => {
     switch (operation) {
       case 'read':
         dbCollection
@@ -38,9 +38,13 @@ const useQuery = <T,>(collection: string, operation: Operation, input?: Input) =
         setError(true)
         break
     }
+  }
+
+  useEffect(() => {
+    runQuery()
   }, [])
 
-  return { data, loading, error }
+  return { data, loading, error, refetch: runQuery }
 }
 
 export default useQuery
