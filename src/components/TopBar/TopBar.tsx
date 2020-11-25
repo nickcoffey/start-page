@@ -9,11 +9,16 @@ const Container = styled.header`
   align-items: center;
 `
 
-const TopBar = () => {
+type Props = {
+  loading: boolean
+  error: boolean
+}
+
+const TopBar = ({ loading, error }: Props) => {
   return (
     <Container>
       <Clock />
-      <Search />
+      <Search loading={loading} error={error} />
     </Container>
   )
 }

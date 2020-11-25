@@ -76,6 +76,9 @@ const ThemePage = () => {
           <Button icon="bacon" color="secondary">
             Secondary
           </Button>
+          <Button icon="times-circle" disabled>
+            Disabled
+          </Button>
         </ComponentSection>
 
         <ComponentSection label="Input">

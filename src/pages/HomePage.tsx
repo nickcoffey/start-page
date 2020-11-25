@@ -8,7 +8,7 @@ const HomePage = () => {
 
   return (
     <>
-      <TopBar />
+      <TopBar loading={loading} error={error} />
       <Bookmarks loading={loading} error={error} bookmarks={data} refetch={refetch} />
     </>
   )

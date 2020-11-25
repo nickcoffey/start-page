@@ -14,12 +14,17 @@ const StyledButton = styled.button<{ background: string; hoverBackground: string
   align-items: center;
   justify-content: center;
 
-  :hover {
+  :disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  :hover:enabled {
     background-color: ${({ hoverBackground }) => hoverBackground};
     color: ${({ hoverText }) => hoverText};
   }
 
-  :active {
+  :active:enabled {
     transform: translateY(1px);
   }
 `
