@@ -1,11 +1,15 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
 const Clock = () => {
-  const [time, setTime] = useState(new Date().toLocaleTimeString())
+  const getCurrentTime = () => new Date().toLocaleTimeString()
 
-  setTimeout(() => {
-    setTime(new Date().toLocaleTimeString())
-  }, 1000)
+  const [time, setTime] = useState(getCurrentTime())
+
+  useEffect(() => {
+    setTimeout(() => {
+      setTime(getCurrentTime())
+    }, 1000)
+  })
 
   return <h1>{time}</h1>
 }

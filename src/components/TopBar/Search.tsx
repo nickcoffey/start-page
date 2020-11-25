@@ -15,7 +15,7 @@ const Search = () => {
       <Button icon="search" type="submit" style={{ marginRight: 24, marginLeft: 12 }}>
         Search
       </Button>
-      <Button icon="edit">Edit</Button>
+      <Button icon="plus">Add</Button>
     </SearchBar>
   )
 }
