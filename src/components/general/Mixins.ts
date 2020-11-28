@@ -16,3 +16,9 @@ export const transitionMixin = css`
   transition-duration: 0.1s;
   transition-timing-function: ease-in-out;
 `
+
+export const centeredFlexMixin = css`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`

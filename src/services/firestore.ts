@@ -1,6 +1,5 @@
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-import firebase from 'firebase'
-require('firebase/firestore')
+import firebase from 'firebase/app'
+import 'firebase/firestore'
 
 const config = {
   apiKey: 'AIzaSyCmVcKSURWpSbVyP0WQ8_9I1CT_ImnYxUY',
