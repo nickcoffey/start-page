@@ -1,16 +1,7 @@
 import { useState, useEffect } from 'react'
 import { firestore } from '../services'
 
-type Operation = 'create' | 'read' | 'update' | 'delete'
-
-type Input = {
-  id: string
-  [key: string]: unknown
-}
-
-// TODO: remove
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const useQuery = <T,>(collection: string, operation: Operation, input?: Input) => {
+const useQuery = <T,>(collection: string) => {
   const [data, setData] = useState<T[]>()
   const [error, setError] = useState(false)
   const [loading, setLoading] = useState(true)
@@ -23,23 +14,15 @@ const useQuery = <T,>(collection: string, operation: Operation, input?: Input) =
   const dbCollection = firestore.collection(collection)
 
   const runQuery = () => {
-    switch (operation) {
-      case 'read':
-        dbCollection
-          .get()
-          .then((snapshot) => {
-            const tempData: T[] = []
-            snapshot.forEach((doc) => tempData.push(doc.data() as T))
-            setData(tempData)
-            setLoading(false)
-          })
-          .catch(handleError)
-        break
-      default:
+    dbCollection
+      .get()
+      .then((snapshot) => {
+        const tempData: T[] = []
+        snapshot.forEach((doc) => tempData.push(doc.data() as T))
+        setData(tempData)
         setLoading(false)
-        setError(true)
-        break
-    }
+      })
+      .catch(handleError)
   }
 
   useEffect(() => {

@@ -1,6 +1,7 @@
 import React from 'react'
 import { useForm } from 'react-hook-form'
 import styled from 'styled-components'
+import { useMutation } from '../../hooks'
 import { BookmarkType } from '../Bookmarks'
 import { Button, Input } from '../general'
 
@@ -12,11 +13,21 @@ const ButtonGroup = styled.div`
   }
 `
 
-const BookmarkForm = () => {
+type Props = {
+  closeModal: () => void
+}
+
+const BookmarkForm = ({ closeModal }: Props) => {
+  const { error, loading, runMutation } = useMutation<BookmarkType>('bookmarks', 'create')
   const { register, handleSubmit, errors } = useForm<BookmarkType>()
   const onSubmit = handleSubmit((data, event) => {
     event?.preventDefault()
-    console.log(data)
+    runMutation(data)
+    // TODO: fix loading and error states
+    console.log({ error, loading })
+    if (!error && !loading) {
+      closeModal()
+    }
   })
 
   const isAVowel = (char: string) => {

@@ -36,7 +36,7 @@ const InputContainer = styled.div<{ background: string; text: string; border: st
     ${opacityMixin(1)}
   }
 `
-
+// TODO: fix extra border when tabbing in forms
 const StyledInput = styled.input`
   border: 0px;
   margin-left: 12px;

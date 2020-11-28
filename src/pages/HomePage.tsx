@@ -4,7 +4,7 @@ import { BookmarkType } from '../components/Bookmarks'
 import { useQuery } from '../hooks'
 
 const HomePage = () => {
-  const { data, loading, error, refetch } = useQuery<BookmarkType>('bookmarks', 'read')
+  const { data, loading, error, refetch } = useQuery<BookmarkType>('bookmarks')
 
   return (
     <>

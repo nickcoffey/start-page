@@ -24,6 +24,7 @@ type Props = {
 
 const Search = ({ loading, error }: Props) => {
   const [modalOpen, setModalOpen] = useState(false)
+  const closeModal = () => setModalOpen(false)
 
   return (
     <>
@@ -37,10 +38,10 @@ const Search = ({ loading, error }: Props) => {
         </Button>
       </SearchBar>
       {modalOpen && (
-        <Modal close={() => setModalOpen(false)}>
+        <Modal close={closeModal}>
           <ModalContent>
             <h1>Add Bookmark</h1>
-            <BookmarkForm />
+            <BookmarkForm closeModal={closeModal} />
           </ModalContent>
         </Modal>
       )}
