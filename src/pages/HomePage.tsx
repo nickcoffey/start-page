@@ -1,10 +1,10 @@
 import React from 'react'
 import { Bookmarks, TopBar } from '../components'
 import { BookmarkType } from '../components/Bookmarks'
-import { useQuery } from '../hooks'
+import { useSubscription } from '../hooks'
 
 const HomePage = () => {
-  const { data, loading, error, refetch } = useQuery<BookmarkType>('bookmarks')
+  const { data, loading, error, refetch } = useSubscription<BookmarkType>('bookmarks')
 
   return (
     <>
