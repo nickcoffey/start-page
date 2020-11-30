@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import styled from 'styled-components'
 import { useMutation } from '../../hooks'
@@ -23,12 +23,13 @@ const BookmarkForm = ({ closeModal }: Props) => {
   const onSubmit = handleSubmit((data, event) => {
     event?.preventDefault()
     runMutation(data)
-    // TODO: fix loading and error states
-    console.log({ error, loading })
+  })
+
+  useEffect(() => {
     if (!error && !loading) {
       closeModal()
     }
-  })
+  }, [error, loading])
 
   const isAVowel = (char: string) => {
     const upper = char.toUpperCase()
