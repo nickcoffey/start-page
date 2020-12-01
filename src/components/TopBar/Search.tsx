@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
-import { faPlus, faSearch } from '@fortawesome/free-solid-svg-icons'
+import { faEdit, faPlus, faSearch, faStop } from '@fortawesome/free-solid-svg-icons'
 import { Button, Input, Modal } from '../general'
 import BookmarkForm from './BookmarkForm'
+import { EditProps } from '../../pages/HomePage'
 
 const SearchBar = styled.form`
   display: flex;
@@ -10,7 +11,7 @@ const SearchBar = styled.form`
   margin-left: 24px;
 `
 
-const ModalContent = styled.div`
+export const ModalContent = styled.div`
   width: 400px;
   padding: 24px;
   h1 {
@@ -21,9 +22,9 @@ const ModalContent = styled.div`
 type Props = {
   loading: boolean
   error: boolean
-}
+} & EditProps
 
-const Search = ({ loading, error }: Props) => {
+const Search = ({ loading, error, editMode, setEditMode }: Props) => {
   const [modalOpen, setModalOpen] = useState(false)
   const closeModal = () => setModalOpen(false)
 
@@ -31,18 +32,27 @@ const Search = ({ loading, error }: Props) => {
     <>
       <SearchBar method="get" id="search" action="https://duckduckgo.com/">
         <Input icon={faSearch} placeholder="Search DuckDuckGo..." name="q" autoFocus />
-        <Button icon={faSearch} type="submit" style={{ marginRight: 24, marginLeft: 12 }}>
+        <Button icon={faSearch} type="submit" style={{ marginRight: 12, marginLeft: 12 }}>
           Search
         </Button>
         <Button icon={faPlus} type="button" onClick={() => setModalOpen(true)} disabled={loading || error}>
           Add
+        </Button>
+        <Button
+          icon={editMode ? faStop : faEdit}
+          type="button"
+          onClick={() => setEditMode(!editMode)}
+          style={{ marginLeft: 12, width: 75 }}
+          disabled={loading || error}
+        >
+          {editMode ? 'Stop' : 'Edit'}
         </Button>
       </SearchBar>
       {modalOpen && (
         <Modal close={closeModal}>
           <ModalContent>
             <h1>Add Bookmark</h1>
-            <BookmarkForm closeModal={closeModal} />
+            <BookmarkForm closeModal={closeModal} operation="create" />
           </ModalContent>
         </Modal>
       )}

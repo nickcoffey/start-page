@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import { EditProps } from '../../pages/HomePage'
 import Clock from './Clock'
 import Search from './Search'
 
@@ -12,13 +13,13 @@ const Container = styled.header`
 type Props = {
   loading: boolean
   error: boolean
-}
+} & EditProps
 
-const TopBar = ({ loading, error }: Props) => {
+const TopBar = ({ loading, error, editMode, setEditMode }: Props) => {
   return (
     <Container>
       <Clock />
-      <Search loading={loading} error={error} />
+      <Search loading={loading} error={error} editMode={editMode} setEditMode={setEditMode} />
     </Container>
   )
 }

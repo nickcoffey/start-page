@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { firestore } from '../services'
 
-const useQuery = <T,>(collection: string) => {
+const useQuery = <T extends { id: string }>(collection: string) => {
   const [data, setData] = useState<T[]>()
   const [error, setError] = useState(false)
   const [loading, setLoading] = useState(true)
@@ -18,7 +18,7 @@ const useQuery = <T,>(collection: string) => {
       .get()
       .then((snapshot) => {
         const tempData: T[] = []
-        snapshot.forEach((doc) => tempData.push(doc.data() as T))
+        snapshot.forEach((doc) => tempData.push({ id: doc.id, ...doc.data() } as T))
         setData(tempData)
         setLoading(false)
       })

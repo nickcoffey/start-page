@@ -67,26 +67,28 @@ interface Props extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type'> {
 
 // TODO: remove
 // eslint-disable-next-line react/display-name
-const Input = forwardRef<HTMLInputElement, Props>(({ icon, label, error, style, ...props }: Props, ref) => {
-  const theme = useContext(ThemeContext)
-  const [value, setValue] = useState('')
+const Input = forwardRef<HTMLInputElement, Props>(
+  ({ icon, label, error, style, defaultValue, ...props }: Props, ref) => {
+    const theme = useContext(ThemeContext)
+    const [value, setValue] = useState(defaultValue)
 
-  return (
-    <Container style={style}>
-      {label && <label>{label}</label>}
-      <InputContainer
-        background={theme.background}
-        text={theme.text}
-        border={error ? theme.secondary : theme.text}
-        hoverBorder={error ? theme.text : theme.primary}
-      >
-        {icon && <FontAwesomeIcon icon={icon} className="icon" />}
-        <StyledInput value={value} onChange={(e) => setValue(e.target.value)} {...props} ref={ref} />
-        {value && <ClearIcon className="fas fa-times" hoverColor={theme.primary} onClick={() => setValue('')} />}
-      </InputContainer>
-      {error && <ErrorText color={theme.secondary}>{error}</ErrorText>}
-    </Container>
-  )
-})
+    return (
+      <Container style={style}>
+        {label && <label>{label}</label>}
+        <InputContainer
+          background={theme.background}
+          text={theme.text}
+          border={error ? theme.secondary : theme.text}
+          hoverBorder={error ? theme.text : theme.primary}
+        >
+          {icon && <FontAwesomeIcon icon={icon} className="icon" />}
+          <StyledInput value={value} onChange={(e) => setValue(e.target.value)} {...props} ref={ref} />
+          {value && <ClearIcon className="fas fa-times" hoverColor={theme.primary} onClick={() => setValue('')} />}
+        </InputContainer>
+        {error && <ErrorText color={theme.secondary}>{error}</ErrorText>}
+      </Container>
+    )
+  }
+)
 
 export default Input

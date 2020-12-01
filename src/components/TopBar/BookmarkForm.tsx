@@ -9,7 +9,7 @@ import {
   faQuoteLeft,
   IconDefinition
 } from '@fortawesome/free-solid-svg-icons'
-import { useMutation } from '../../hooks'
+import { MutationOperation, useMutation } from '../../hooks'
 import { BookmarkType } from '../Bookmarks'
 import { Button, Input } from '../general'
 
@@ -23,14 +23,16 @@ const ButtonGroup = styled.div`
 
 type Props = {
   closeModal: () => void
+  operation: MutationOperation
+  bookmark?: BookmarkType
 }
 
-const BookmarkForm = ({ closeModal }: Props) => {
-  const { error, loading, runMutation } = useMutation<BookmarkType>('bookmarks', 'create')
-  const { register, handleSubmit, errors } = useForm<BookmarkType>()
+const BookmarkForm = ({ closeModal, operation, bookmark }: Props) => {
+  const { error, loading, runMutation } = useMutation<BookmarkType>('bookmarks', operation)
+  const { register, handleSubmit, errors } = useForm<Omit<BookmarkType, 'id'>>()
   const onSubmit = handleSubmit((data, event) => {
     event?.preventDefault()
-    runMutation(data)
+    runMutation({ id: bookmark?.id, ...data })
   })
 
   useEffect(() => {
@@ -44,7 +46,7 @@ const BookmarkForm = ({ closeModal }: Props) => {
     return upper === 'A' || upper === 'E' || upper === 'I' || upper === 'O' || upper === 'U'
   }
 
-  const inputs: { name: keyof BookmarkType; icon: IconDefinition }[] = [
+  const inputs: { name: keyof Omit<BookmarkType, 'id'>; icon: IconDefinition }[] = [
     { name: 'letters', icon: faFont },
     { name: 'link', icon: faLink },
     { name: 'name', icon: faQuoteLeft }
@@ -60,6 +62,7 @@ const BookmarkForm = ({ closeModal }: Props) => {
             name={name}
             icon={icon}
             label={label}
+            defaultValue={bookmark ? bookmark[name] : undefined}
             placeholder={label}
             ref={register({ required: true })}
             error={errors[name] && `Please enter ${isAVowel(name[0]) ? 'an' : 'a'} ${name}`}

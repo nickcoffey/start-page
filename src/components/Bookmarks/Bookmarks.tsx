@@ -1,50 +1,23 @@
 import React, { useContext } from 'react'
-import styled, { css } from 'styled-components'
+import styled from 'styled-components'
 import { faRedo } from '@fortawesome/free-solid-svg-icons'
 import { ThemeContext } from '../../App'
-import { borderRadiusMixin, Button, Card, Spinner } from '../general'
-
-const CardLink = styled.a`
-  text-decoration: none;
-`
-
-const centeredMixin = css`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-`
-
-const StyledCard = styled(Card)`
-  ${centeredMixin}
-`
-
-const Letters = styled.h1`
-  font-size: 50px;
-  margin-bottom: 10px;
-`
+import { borderRadiusMixin, Button, columnCenteredMixin, Spinner } from '../general'
+import BookmarkCard from './BookmarkCard'
 
 export type BookmarkType = {
+  id: string
   letters: string
   link: string
   name: string
 }
 
-const BookmarkCard = ({ letters, link, name }: BookmarkType) => (
-  <CardLink href={link}>
-    <StyledCard hoverColor="primary">
-      <Letters>{letters.toUpperCase()}</Letters>
-      <h3>{name}</h3>
-    </StyledCard>
-  </CardLink>
-)
-
 const LoadingContainer = styled.div`
-  ${centeredMixin}
+  ${columnCenteredMixin}
 `
 
 const ErrorContainer = styled.div<{ border: string }>`
-  ${centeredMixin};
+  ${columnCenteredMixin};
   ${borderRadiusMixin};
   border: 1px solid ${({ border }) => border};
   padding: 24px 0px;
@@ -68,9 +41,10 @@ type Props = {
   error: boolean
   refetch: () => void
   bookmarks?: BookmarkType[]
+  editMode: boolean
 }
 
-const Bookmarks = ({ loading, error, refetch, bookmarks }: Props) => {
+const Bookmarks = ({ loading, error, refetch, bookmarks, editMode }: Props) => {
   const theme = useContext(ThemeContext)
   const sortedBookmarks = bookmarks?.sort((a, b) => (a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1))
 
@@ -90,7 +64,7 @@ const Bookmarks = ({ loading, error, refetch, bookmarks }: Props) => {
       ) : (
         <CardContainer>
           {sortedBookmarks?.map((bookmark, index) => (
-            <BookmarkCard key={index} {...bookmark} />
+            <BookmarkCard key={index} editMode={editMode} {...bookmark} />
           ))}
         </CardContainer>
       )}

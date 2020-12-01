@@ -22,3 +22,10 @@ export const centeredFlexMixin = css`
   justify-content: center;
   align-items: center;
 `
+
+export const columnCenteredMixin = css`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`

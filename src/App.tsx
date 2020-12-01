@@ -23,6 +23,8 @@ const theme = {
   }
 }
 
+export type ColorOptions = keyof typeof theme.dark
+
 export const ThemeContext = createContext(theme.light)
 
 const Content = styled.div`

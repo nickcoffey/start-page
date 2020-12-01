@@ -1,9 +1,9 @@
 import React, { HTMLAttributes, useContext } from 'react'
 import styled from 'styled-components'
-import { ThemeContext } from '../../App'
+import { ColorOptions, ThemeContext } from '../../App'
 import { borderRadiusMixin } from './Mixins'
 
-const StyledCard = styled.div<{ border: string; hoverColor: string; width: number; height: number }>`
+const StyledCard = styled.div<{ color: string; border: string; hoverColor: string; width: number; height: number }>`
   ${borderRadiusMixin}
   border: 1px solid ${({ border }) => border};
   width: ${({ width }) => width}px;
@@ -11,15 +11,11 @@ const StyledCard = styled.div<{ border: string; hoverColor: string; width: numbe
   cursor: pointer;
 
   > * {
-    color: ${({ border }) => border};
+    color: ${({ color }) => color};
   }
 
   :hover {
     border: 1px solid ${({ hoverColor }) => hoverColor};
-    color: ${({ hoverColor }) => hoverColor};
-    > * {
-      color: ${({ hoverColor }) => hoverColor};
-    }
   }
   :active {
     transform: translateY(1px);
@@ -29,14 +25,31 @@ const StyledCard = styled.div<{ border: string; hoverColor: string; width: numbe
 interface Props extends Omit<HTMLAttributes<HTMLDivElement>, 'color'> {
   width?: number
   height?: number
-  hoverColor?: 'primary' | 'secondary'
+  color?: ColorOptions
+  hoverColor?: ColorOptions
+  borderColor?: ColorOptions
 }
 
-const Card = ({ children, width = 150, height = 150, hoverColor = 'primary', ...props }: Props) => {
+const Card = ({
+  children,
+  width = 150,
+  height = 150,
+  color = 'text',
+  hoverColor = 'primary',
+  borderColor = 'text',
+  ...props
+}: Props) => {
   const theme = useContext(ThemeContext)
 
   return (
-    <StyledCard border={theme.text} hoverColor={theme[hoverColor]} width={width} height={height} {...props}>
+    <StyledCard
+      color={theme[color]}
+      border={theme[borderColor]}
+      hoverColor={theme[hoverColor]}
+      width={width}
+      height={height}
+      {...props}
+    >
       {children}
     </StyledCard>
   )
