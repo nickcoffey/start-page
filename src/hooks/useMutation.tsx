@@ -15,30 +15,35 @@ const useMutation = <T extends { id: string }>(collection: string, operation: Op
 
   const dbCollection = firestore.collection(collection)
 
-  const runMutation = ({ id, ...fields }: { id?: string } & Omit<T, 'id'>) => {
+  const runMutation = ({ id, fields }: { id?: string; fields?: Omit<T, 'id'> }) => {
     switch (operation) {
       case 'create':
-        dbCollection
-          .add(fields)
-          .then((doc) => {
-            setData({ id: doc.id, ...fields } as T)
-            setLoading(false)
-          })
-          .catch(handleError)
+        fields &&
+          dbCollection
+            .add(fields)
+            .then((doc) => {
+              setData({ id: doc.id, ...fields } as T)
+              setLoading(false)
+            })
+            .catch(handleError)
         break
       case 'update':
-        console.log(`UPDATE${id}`)
-        dbCollection
-          .doc(id)
-          .set(fields)
-          .then(() => {
-            setData({ id, ...fields } as T)
-            setLoading(false)
-          })
-          .catch(handleError)
+        fields &&
+          dbCollection
+            .doc(id)
+            .set(fields)
+            .then(() => {
+              setData({ id, ...fields } as T)
+              setLoading(false)
+            })
+            .catch(handleError)
         break
       case 'delete':
-        console.log('DELETE')
+        dbCollection
+          .doc(id)
+          .delete()
+          .then(() => setLoading(false))
+          .catch(handleError)
         break
       default:
         setLoading(false)

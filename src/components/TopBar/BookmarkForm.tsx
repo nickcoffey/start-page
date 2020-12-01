@@ -32,7 +32,7 @@ const BookmarkForm = ({ closeModal, operation, bookmark }: Props) => {
   const { register, handleSubmit, errors } = useForm<Omit<BookmarkType, 'id'>>()
   const onSubmit = handleSubmit((data, event) => {
     event?.preventDefault()
-    runMutation({ id: bookmark?.id, ...data })
+    runMutation({ id: bookmark?.id, fields: data })
   })
 
   useEffect(() => {
