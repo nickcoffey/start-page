@@ -1,6 +1,14 @@
 import React, { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import styled from 'styled-components'
+import {
+  faBookmark,
+  faFont,
+  faLink,
+  faMinusCircle,
+  faQuoteLeft,
+  IconDefinition
+} from '@fortawesome/free-solid-svg-icons'
 import { useMutation } from '../../hooks'
 import { BookmarkType } from '../Bookmarks'
 import { Button, Input } from '../general'
@@ -36,10 +44,10 @@ const BookmarkForm = ({ closeModal }: Props) => {
     return upper === 'A' || upper === 'E' || upper === 'I' || upper === 'O' || upper === 'U'
   }
 
-  const inputs: { name: keyof BookmarkType; icon: string }[] = [
-    { name: 'subtitle', icon: 'quote-left' },
-    { name: 'link', icon: 'link' },
-    { name: 'icon', icon: 'icons' }
+  const inputs: { name: keyof BookmarkType; icon: IconDefinition }[] = [
+    { name: 'letters', icon: faFont },
+    { name: 'link', icon: faLink },
+    { name: 'name', icon: faQuoteLeft }
   ]
 
   return (
@@ -60,11 +68,11 @@ const BookmarkForm = ({ closeModal }: Props) => {
         )
       })}
       <ButtonGroup>
-        <Button type="submit" icon="bookmark">
+        <Button type="submit" icon={faBookmark}>
           Submit
         </Button>
         {/* TODO: make this work */}
-        <Button type="reset" icon="minus-circle" color="secondary">
+        <Button type="reset" icon={faMinusCircle} color="secondary">
           Clear
         </Button>
       </ButtonGroup>

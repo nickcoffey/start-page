@@ -1,5 +1,7 @@
 import React, { ButtonHTMLAttributes, useContext } from 'react'
 import styled from 'styled-components'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { IconDefinition } from '@fortawesome/fontawesome-svg-core'
 import { ThemeContext } from '../../App'
 import { borderRadiusMixin } from './Mixins'
 
@@ -30,7 +32,7 @@ const StyledButton = styled.button<{ background: string; hoverBackground: string
 `
 
 interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
-  icon?: string
+  icon?: IconDefinition
   color?: 'primary' | 'secondary'
 }
 
@@ -46,7 +48,7 @@ const Button = ({ children, icon, color, ...props }: Props) => {
       hoverText={theme.text}
       {...props}
     >
-      {icon && <i className={`fas fa-${icon}`} style={{ paddingRight: children ? 4 : undefined }}></i>}
+      {icon && <FontAwesomeIcon icon={icon} style={{ paddingRight: children ? 4 : undefined }} />}
       {children}
     </StyledButton>
   )

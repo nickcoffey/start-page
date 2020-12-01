@@ -1,5 +1,6 @@
 import React, { ReactNode, useContext, useState } from 'react'
 import styled from 'styled-components'
+import { faBacon, faSearch, faTimesCircle } from '@fortawesome/free-solid-svg-icons'
 import { ThemeContext } from '../App'
 import { Input, Button, Card, Spinner, Modal } from '../components/general'
 
@@ -72,17 +73,17 @@ const ThemePage = () => {
 
       <Section label="Components" noParentContainer>
         <ComponentSection label="Button">
-          <Button icon="bacon">Primary</Button>
-          <Button icon="bacon" color="secondary">
+          <Button icon={faBacon}>Primary</Button>
+          <Button icon={faBacon} color="secondary">
             Secondary
           </Button>
-          <Button icon="times-circle" disabled>
+          <Button icon={faTimesCircle} disabled>
             Disabled
           </Button>
         </ComponentSection>
 
         <ComponentSection label="Input">
-          <Input icon="search" placeholder="Enter text here..." />
+          <Input icon={faSearch} placeholder="Enter text here..." />
         </ComponentSection>
 
         <ComponentSection label="Card">

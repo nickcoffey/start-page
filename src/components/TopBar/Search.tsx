@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
+import { faPlus, faSearch } from '@fortawesome/free-solid-svg-icons'
 import { Button, Input, Modal } from '../general'
 import BookmarkForm from './BookmarkForm'
 
@@ -29,11 +30,11 @@ const Search = ({ loading, error }: Props) => {
   return (
     <>
       <SearchBar method="get" id="search" action="https://duckduckgo.com/">
-        <Input icon="search" placeholder="Search DuckDuckGo..." name="q" autoFocus />
-        <Button icon="search" type="submit" style={{ marginRight: 24, marginLeft: 12 }}>
+        <Input icon={faSearch} placeholder="Search DuckDuckGo..." name="q" autoFocus />
+        <Button icon={faSearch} type="submit" style={{ marginRight: 24, marginLeft: 12 }}>
           Search
         </Button>
-        <Button icon="plus" type="button" onClick={() => setModalOpen(true)} disabled={loading || error}>
+        <Button icon={faPlus} type="button" onClick={() => setModalOpen(true)} disabled={loading || error}>
           Add
         </Button>
       </SearchBar>

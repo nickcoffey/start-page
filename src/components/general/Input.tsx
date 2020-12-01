@@ -1,10 +1,12 @@
 import React, { forwardRef, InputHTMLAttributes, useContext, useState } from 'react'
 import styled, { css } from 'styled-components'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { IconDefinition } from '@fortawesome/free-solid-svg-icons'
 import { ThemeContext } from '../../App'
 import { borderRadiusMixin } from './Mixins'
 
 const opacityMixin = (opacity: number) => css`
-  i {
+  .icon {
     opacity: ${opacity};
   }
   input::placeholder {
@@ -58,7 +60,7 @@ const ErrorText = styled.label<{ color: string }>`
 `
 
 interface Props extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type'> {
-  icon?: string
+  icon?: IconDefinition
   label?: string
   error?: string
 }
@@ -78,7 +80,7 @@ const Input = forwardRef<HTMLInputElement, Props>(({ icon, label, error, style, 
         border={error ? theme.secondary : theme.text}
         hoverBorder={error ? theme.text : theme.primary}
       >
-        {icon && <i className={`fas fa-${icon}`} />}
+        {icon && <FontAwesomeIcon icon={icon} className="icon" />}
         <StyledInput value={value} onChange={(e) => setValue(e.target.value)} {...props} ref={ref} />
         {value && <ClearIcon className="fas fa-times" hoverColor={theme.primary} onClick={() => setValue('')} />}
       </InputContainer>

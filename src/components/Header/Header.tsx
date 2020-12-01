@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import { faMoon, faSun } from '@fortawesome/free-solid-svg-icons'
 import { Button } from '../general'
 
 const Container = styled.header`
@@ -16,7 +17,7 @@ type Props = {
 const Header = ({ isDark, setIsDark }: Props) => {
   return (
     <Container>
-      <Button onClick={() => setIsDark(!isDark)} icon={isDark ? 'sun' : 'moon'} />
+      <Button onClick={() => setIsDark(!isDark)} icon={isDark ? faSun : faMoon} />
     </Container>
   )
 }

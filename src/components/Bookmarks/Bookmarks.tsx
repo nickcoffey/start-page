@@ -1,5 +1,6 @@
 import React, { useContext } from 'react'
 import styled, { css } from 'styled-components'
+import { faRedo } from '@fortawesome/free-solid-svg-icons'
 import { ThemeContext } from '../../App'
 import { borderRadiusMixin, Button, Card, Spinner } from '../general'
 
@@ -18,22 +19,22 @@ const StyledCard = styled(Card)`
   ${centeredMixin}
 `
 
-const Icon = styled.i`
-  font-size: 60px;
-  margin: 24px 0px;
+const Letters = styled.h1`
+  font-size: 50px;
+  margin-bottom: 10px;
 `
 
 export type BookmarkType = {
-  icon: string
-  subtitle: string
+  letters: string
   link: string
+  name: string
 }
 
-const BookmarkCard = ({ icon, subtitle, link }: BookmarkType) => (
+const BookmarkCard = ({ letters, link, name }: BookmarkType) => (
   <CardLink href={link}>
     <StyledCard hoverColor="primary">
-      <Icon className={`fab fa-${icon}`} />
-      <h3>{subtitle}</h3>
+      <Letters>{letters.toUpperCase()}</Letters>
+      <h3>{name}</h3>
     </StyledCard>
   </CardLink>
 )
@@ -71,14 +72,14 @@ type Props = {
 
 const Bookmarks = ({ loading, error, refetch, bookmarks }: Props) => {
   const theme = useContext(ThemeContext)
-  const sortedBookmarks = bookmarks?.sort((a, b) => (a.subtitle.toLowerCase() > b.subtitle.toLowerCase() ? 1 : -1))
+  const sortedBookmarks = bookmarks?.sort((a, b) => (a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1))
 
   return (
     <>
       {error ? (
         <ErrorContainer border={theme.secondary}>
           <h3>There was an error loading your bookmarks please try again</h3>
-          <Button icon="redo" onClick={() => refetch()}>
+          <Button icon={faRedo} onClick={() => refetch()}>
             Try Again
           </Button>
         </ErrorContainer>
